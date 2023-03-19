@@ -2,6 +2,7 @@ import React from 'react';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import SearchBar from '../../components/SearchBar';
 
 const MainPage = () => {
   return (
@@ -16,11 +17,12 @@ const MainPage = () => {
       {/*  price={379}*/}
       {/*/>*/}
       {/*<Button>Find Now</Button>*/}
-      <Input
+      {/*      <Input
         value=""
         onChange={(value: string) => console.log(value)}
         placeholder="Начните набирать свой вопрос"
-      />
+      />*/}
+      <SearchBar />
     </div>
   );
 };

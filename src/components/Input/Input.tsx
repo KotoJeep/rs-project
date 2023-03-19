@@ -10,7 +10,7 @@ const Input: FC<InputProps> = ({ value = '', onChange, ...props }: InputProps) =
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };
-  const inputClass = cn('input', { input_disabled: props.disabled }, `${props.className}`);
+  const inputClass = cn('input', { input_disabled: props.disabled }, `${props.className ?? ''}`);
   return <input type="text" {...props} className={inputClass} onChange={handleInputChange} />;
 };
 
