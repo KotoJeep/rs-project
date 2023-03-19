@@ -1,11 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import './Header.scss';
+import { Link, NavLink } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <header>
-      <Link to="/">Home</Link>
-      <Link to="/about-us">About Us</Link>
+    <header className="header">
+      <nav className="header-nav">
+        <NavLink className="header-nav__link" to="/">
+          Products
+        </NavLink>
+        <NavLink className="header-nav__link" to="/categories">
+          Categories
+        </NavLink>
+        <NavLink className="header-nav__link" to="/about-us">
+          About Us
+        </NavLink>
+      </nav>
     </header>
   );
 };

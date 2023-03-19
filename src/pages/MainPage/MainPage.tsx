@@ -22,7 +22,7 @@ const MainPage = () => {
         onChange={(value: string) => console.log(value)}
         placeholder="Начните набирать свой вопрос"
       />*/}
-      <SearchBar />
+      {/*<SearchBar />*/}
     </div>
   );
 };

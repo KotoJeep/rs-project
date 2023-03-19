@@ -1,9 +1,11 @@
 .button {
   padding: 16px 28px;
+  min-width: 138px;
   max-height: 55px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: nowrap;
   gap: 4.5px;
   background-color: var(--mainColor);
   color: #fff;
