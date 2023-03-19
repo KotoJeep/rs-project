@@ -7,6 +7,7 @@ const SearchBar = () => {
   return (
     <div className="search-bar">
       <Input
+        placeholder="Search property"
         onChange={(value) => {
           console.log(value);
         }}

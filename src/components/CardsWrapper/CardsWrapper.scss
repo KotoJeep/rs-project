@@ -1,0 +1,19 @@
+.cards {
+  margin-top: 50px;
+  &-title{
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 130%;
+    color: var(--textColor);
+  }
+  &-wrapper {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    row-gap: 30px;
+  }
+}
+
