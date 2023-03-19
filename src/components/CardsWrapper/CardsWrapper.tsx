@@ -21,7 +21,6 @@ const CardsWrapper = ({ collection }: CardsWrapperProps) => {
       />
     );
   });
-  console.log(collection);
   return (
     <div className="cards">
       <h2 className="cards-title">Total Product</h2>
