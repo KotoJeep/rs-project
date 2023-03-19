@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
+import Input from '../../components/Input';
 
 const MainPage = () => {
   return (
@@ -14,7 +15,12 @@ const MainPage = () => {
       {/*  category={'Clothes'}*/}
       {/*  price={379}*/}
       {/*/>*/}
-      <Button>Find Now</Button>
+      {/*<Button>Find Now</Button>*/}
+      <Input
+        value=""
+        onChange={(value: string) => console.log(value)}
+        placeholder="Начните набирать свой вопрос"
+      />
     </div>
   );
 };
