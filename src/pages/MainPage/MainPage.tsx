@@ -12,7 +12,7 @@ const item: CardProps = {
     'The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive',
   price: 547,
 };
-const arrItems: CardProps[] = new Array(9).fill(item);
+export const arrItems: CardProps[] = new Array(9).fill(item);
 
 const MainPage = () => {
   return (
