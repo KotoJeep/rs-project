@@ -1,0 +1,33 @@
+.button {
+  padding: 16px 28px;
+  min-width: 138px;
+  max-height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 4.5px;
+  background-color: var(--mainColor);
+  color: #fff;
+  border: none;
+  transition: all .2s;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 130%;
+
+  &:hover {
+    opacity: .8;
+    cursor: pointer;
+  }
+
+  &__disabled {
+    opacity: .3;
+    cursor: default;
+
+    &:hover {
+      opacity: .3;
+      cursor: default;
+    }
+  }
+
+}
