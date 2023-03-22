@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import './CardsWrapper.scss';
 import Card, { CardProps } from '../Card';
 
