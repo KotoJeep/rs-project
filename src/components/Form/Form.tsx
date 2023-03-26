@@ -1,15 +1,9 @@
-import React, { ChangeEvent, Component, createRef, FormEvent } from 'react';
+import React, { Component, createRef, FormEvent } from 'react';
 import './Form.scss';
 import CheckBox from '../CheckBox';
 
-import { Option } from '../Select/Select';
 import Button from '../Button';
-
-const options: Option[] = [
-  { value: 'option1', label: 'Option 1' },
-  { value: 'option2', label: 'Option 2' },
-  { value: 'option3', label: 'Option 3' },
-];
+import { personalCardProps } from '../CardPersonal';
 
 type FormState = {
   nameError: boolean;
@@ -19,14 +13,6 @@ type FormState = {
 };
 type FormProps = {
   addFormData: (data: personalCardProps) => void;
-};
-export type personalCardProps = {
-  name: string;
-  date: string;
-  gender: string;
-  city: string;
-  agree: boolean;
-  file: Blob;
 };
 
 class Form extends Component<FormProps, FormState> {
@@ -52,7 +38,9 @@ class Form extends Component<FormProps, FormState> {
       date: this.dateRef.current?.value || '',
       gender: (this.maleRef.current?.value || this.femaleRef.current?.value) as string,
       city: this.cityRef.current?.value || '',
-      file: this.fileRef.current?.files?.[0] as Blob,
+      file: this.fileRef.current?.files?.[0]
+        ? URL.createObjectURL(this.fileRef.current?.files?.[0])
+        : '',
       agree: this.checkRef.current?.checked || false,
     };
     addFormData(data);
@@ -64,7 +52,7 @@ class Form extends Component<FormProps, FormState> {
         <input placeholder="Name" ref={this.nameRef} />
         <input type="date" ref={this.dateRef} />
         <label>
-          Сошласие на обработку данных
+          Agree
           <CheckBox onChange={() => {}} ref={this.checkRef} />
         </label>
         <div className="form-gender">

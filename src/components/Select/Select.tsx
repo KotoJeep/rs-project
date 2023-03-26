@@ -1,8 +1,6 @@
 import React, { SelectHTMLAttributes } from 'react';
 import './Select.scss';
 
-import cn from 'classnames';
-
 export type Option = {
   label: string;
   value: string;

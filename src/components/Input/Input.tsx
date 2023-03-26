@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, ForwardedRef } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import './Input.scss';
 import cn from 'classnames';
 
