@@ -10,7 +10,7 @@ const Header = () => {
           Products
         </NavLink>
         <NavLink className="header-nav__link" to="/categories">
-          Categories
+          Form
         </NavLink>
         <NavLink className="header-nav__link" to="/about-us">
           About Us

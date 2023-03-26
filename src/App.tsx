@@ -5,7 +5,7 @@ import Layout from './components/Layout/Layout';
 import MainPage from './pages/MainPage/MainPage';
 import AboutUs from './pages/AboutUs/AboutUs';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
-import Categories from './pages/Categories/Categories';
+import FormPage from './pages/FormPage/FormPage';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
-          <Route path="categories" element={<Categories />} />
+          <Route path="categories" element={<FormPage />} />
           <Route path="about-us" element={<AboutUs />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
