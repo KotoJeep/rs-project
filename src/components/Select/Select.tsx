@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps, HTMLAttributes, useEffect, useState } from 'react';
+import React, { SelectHTMLAttributes } from 'react';
 import './Select.scss';
 
 import cn from 'classnames';
@@ -8,13 +8,13 @@ export type Option = {
   value: string;
 };
 
-export type MultiDropdownProps = {
+export type SelectProps = Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> & {
   options: Option[];
-  value: Option | null;
+  value: Option | null | undefined;
   onChange: (option: Option) => void;
 };
 
-const Select: React.FC<MultiDropdownProps> = ({ options, value, onChange }) => {
+const Select: React.FC<SelectProps> = ({ options, value, onChange }) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const option = options.find((option) => option.value === event.target.value);
     if (option) {
