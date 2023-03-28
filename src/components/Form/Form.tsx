@@ -46,7 +46,7 @@ class Form extends Component<FormProps, FormState> {
     e.preventDefault();
     const name = this.nameRef.current?.value || '';
     const date = this.dateRef.current?.value || '';
-    const gender = (this.maleRef.current?.value || this.femaleRef.current?.value) as string;
+    const gender = this.maleRef.current?.checked ? 'male' : 'female';
     const city = this.cityRef.current?.value || '';
     const fileName = this.fileRef.current?.files?.[0] ? this.fileRef.current?.files?.[0].name : '';
     const agree = this.checkRef.current?.checked || false;
@@ -83,7 +83,14 @@ class Form extends Component<FormProps, FormState> {
         </label>
         <div className="form-gender">
           <p>gender:</p>
-          <input type="radio" id="male" name="gender" value="male" ref={this.maleRef} />
+          <input
+            type="radio"
+            id="male"
+            name="gender"
+            value="male"
+            ref={this.maleRef}
+            defaultChecked
+          />
           <label htmlFor="male">Male</label>
           <input type="radio" id="female" name="gender" value="female" ref={this.femaleRef} />
           <label htmlFor="female">female</label>
