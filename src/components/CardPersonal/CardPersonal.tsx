@@ -13,11 +13,11 @@ const CardPersonal: FC<personalCardProps> = ({ name, city, agree, file, gender, 
     <div className="card-personal">
       <img src={file} className="card-personal__img" />
       <div className="card-personal__wrapper">
-        <h5 className="card-personal__name">{name}</h5>
-        <h3 className="card-personal__gender">{gender}</h3>
-        <p className="card-personal__date">{date}</p>
+        <h3 className="card-personal__name">{name}</h3>
+        <h5 className="card-personal__gender">{gender}</h5>
+        <p className="card-personal__date">Birthday {date}</p>
         <p className="card-personal__city">{city}</p>
-        <h3 className="card-personal__price">{agree ? 'согласие' : 'несогласие'}</h3>
+        <div className="card-personal__agree">{agree ? 'subscribed' : ' unsubscribed'}</div>
       </div>
     </div>
   );

@@ -12,7 +12,6 @@ class FormPage extends Component<unknown, FormProps> {
   };
 
   addFormData = (data: personalCardProps) => {
-    console.log(data);
     this.setState({ cards: [...this.state.cards, data] });
   };
 
