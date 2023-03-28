@@ -16,7 +16,7 @@ export const arrItems: CardProps[] = new Array(9).fill(item);
 
 const MainPage = () => {
   return (
-    <>
+    <div data-testid="main-page">
       <section className="presentation">
         <h1 className="presentation__title">Products</h1>
         <p className="presentation__text">
@@ -26,7 +26,7 @@ const MainPage = () => {
       </section>
       <SearchBar />
       <CardsWrapper collection={arrItems} />
-    </>
+    </div>
   );
 };
 

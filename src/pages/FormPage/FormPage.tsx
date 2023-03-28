@@ -17,7 +17,7 @@ class FormPage extends Component<unknown, FormProps> {
 
   render() {
     return (
-      <>
+      <div data-testid="form-page">
         <h1 style={{ color: 'red' }}>
           Please postpone the review of my work until Wednesday, I did not have time to finish
           everything (there are not enough tests, validation and styles yet)
@@ -38,7 +38,7 @@ class FormPage extends Component<unknown, FormProps> {
             );
           })}
         </div>
-      </>
+      </div>
     );
   }
 }

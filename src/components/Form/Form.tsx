@@ -36,7 +36,7 @@ class Form extends Component<FormProps, FormState> {
     const nameError = validateText(name, 2) ? null : 'name cannot be shorter than 2 letters!';
     const cityError = validateText(city, 0) ? null : 'chose city!';
     const dateError = validateText(date, 0) ? null : 'pick date!';
-    const fileError = validateImg(file) ? null : 'Only jpeg, png, gif, svg format';
+    const fileError = validateImg(file) ? null : 'chose image, Only jpeg, png, gif, svg formats!';
     this.setState({ nameError, cityError, dateError, fileError });
     return nameError === null && cityError === null && dateError === null && fileError === null;
   };
