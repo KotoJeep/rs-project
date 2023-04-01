@@ -1,42 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component, FC, useState } from 'react';
 import Form from '../../components/Form';
 import CardPersonal, { personalCardProps } from '../../components/CardPersonal';
 
-type FormProps = {
-  cards: personalCardProps[];
-};
+const FormPage: FC = () => {
+  const [cards, setCards] = useState<personalCardProps[]>([]);
 
-class FormPage extends Component<unknown, FormProps> {
-  state: FormProps = {
-    cards: [],
+  const addFormData = (data: personalCardProps) => {
+    setCards([...cards, data]);
   };
 
-  addFormData = (data: personalCardProps) => {
-    this.setState({ cards: [...this.state.cards, data] });
-  };
-
-  render() {
-    return (
-      <div data-testid="form-page">
-        <Form addFormData={this.addFormData} />
-        <div className="card-wrapper">
-          {this.state.cards.map(({ name, date, gender, agree, city, file }, idx) => {
-            return (
-              <CardPersonal
-                key={idx}
-                name={name}
-                date={date}
-                gender={gender}
-                city={city}
-                agree={agree}
-                file={file}
-              />
-            );
-          })}
-        </div>
+  return (
+    <div data-testid="form-page">
+      <Form addFormData={addFormData} />
+      <div className="card-wrapper">
+        {cards.map(({ name, date, gender, agree, city, file }, idx) => {
+          return (
+            <CardPersonal
+              key={idx}
+              name={name}
+              date={date}
+              gender={gender}
+              city={city}
+              agree={agree}
+              file={file}
+            />
+          );
+        })}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default FormPage;
