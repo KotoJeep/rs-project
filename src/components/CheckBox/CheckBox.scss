@@ -1,0 +1,47 @@
+.checkbox {
+  --check: 2px solid var(--mainColor);
+  --position: rotate(45deg) translate(-10%, -20%);
+
+  height: 27px;
+  width: 27px;
+  display: inline-block;
+  appearance: none;
+  position: relative;
+  border: 1px solid var(--fadeColor);
+  border-radius: 4px;
+
+  &:hover {
+    border: 1px solid #6C757D;
+  }
+
+  &:disabled {
+    &:hover {
+      border-color: var(--fadeColor);
+    }
+  }
+
+  &::before {
+    content: '';
+    margin: auto;
+    position: absolute;
+    height: 50%;
+    width: 27%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-right: var(--check);
+    border-bottom: var(--check);
+    transform: scale(0) var(--position);
+    transition: .1s transform ease-in-out;
+  }
+
+  &:focus {
+    border-color: var(--mainColor);
+  }
+
+  &:checked::before {
+    transform: scale(1) var(--position);
+  }
+
+}

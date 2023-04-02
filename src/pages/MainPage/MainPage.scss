@@ -1,0 +1,23 @@
+.presentation {
+  padding-top: 30px;
+  padding-bottom: 50px;
+  width: 100%;
+  text-align: center;
+
+
+  &__title {
+
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 130%;
+    color: var(--textColor);
+  }
+
+  &__text {
+    margin-top: 20px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 180%;
+    color: var(--fadeColor);
+  }
+}
