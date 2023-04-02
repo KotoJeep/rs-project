@@ -1,11 +1,11 @@
-import React, { Component, FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import Form from '../../components/Form';
-import CardPersonal, { personalCardProps } from '../../components/CardPersonal';
+import CardPersonal, { FormInputs } from '../../components/CardPersonal';
 
 const FormPage: FC = () => {
-  const [cards, setCards] = useState<personalCardProps[]>([]);
+  const [cards, setCards] = useState<FormInputs[]>([]);
 
-  const addFormData = (data: personalCardProps) => {
+  const addFormData = (data: FormInputs) => {
     setCards([...cards, data]);
   };
 

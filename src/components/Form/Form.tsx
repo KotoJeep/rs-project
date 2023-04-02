@@ -1,109 +1,113 @@
-import React, { Component, createRef, FC, FormEvent, useRef, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import './Form.scss';
 import CheckBox from '../CheckBox';
 
 import Button from '../Button';
-import { personalCardProps } from '../CardPersonal';
-import { validateText, validateImg } from './validation';
 
-type FormState = {
-  nameError: string | null;
-  cityError: string | null;
-  fileError: string | null;
-  dateError: string | null;
-};
+import { useForm } from 'react-hook-form';
+import { FormInputs } from '../CardPersonal';
+
 type FormProps = {
-  addFormData: (data: personalCardProps) => void;
+  addFormData: (data: FormInputs) => void;
+};
+
+type formState = {
+  name: string;
+  date: string;
+  gender: string;
+  city: string;
+  file: FileList;
+  agree: boolean;
 };
 
 const Form: FC<FormProps> = ({ addFormData }) => {
-  const [formState, setFormState] = useState<FormState>({
-    nameError: null,
-    cityError: null,
-    fileError: null,
-    dateError: null,
+  const [created, setCreated] = useState<boolean>(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitSuccessful },
+    reset,
+  } = useForm<formState>({
+    reValidateMode: 'onSubmit',
+    mode: 'onSubmit',
+    shouldFocusError: false,
   });
-  const nameRef = useRef<HTMLInputElement>(null);
-  const dateRef = useRef<HTMLInputElement>(null);
-  const maleRef = useRef<HTMLInputElement>(null);
-  const checkRef = useRef<HTMLInputElement>(null);
-  const femaleRef = useRef<HTMLInputElement>(null);
-  const cityRef = useRef<HTMLSelectElement>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
 
-  const checkFields = (name: string, date: string, city: string, file: string): boolean => {
-    const nameError = validateText(name, 2) ? null : 'name cannot be shorter than 2 letters!';
-    const cityError = validateText(city, 0) ? null : 'chose city!';
-    const dateError = validateText(date, 0) ? null : 'pick date!';
-    const fileError = validateImg(file) ? null : 'chose image, Only jpeg, png, gif, svg formats!';
-    setFormState({ nameError, cityError, dateError, fileError });
-    return nameError === null && cityError === null && dateError === null && fileError === null;
-  };
+  const onSubmit = handleSubmit((data: formState) => {
+    addFormData({
+      ...data,
+      file: URL.createObjectURL(data.file[0]),
+    });
+    setCreated(true);
+  });
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    const name = nameRef.current?.value || '';
-    const date = dateRef.current?.value || '';
-    const gender = maleRef.current?.checked ? 'male' : 'female';
-    const city = cityRef.current?.value || '';
-    const fileName = fileRef.current?.files?.[0] ? fileRef.current?.files?.[0].name : '';
-    const agree = checkRef.current?.checked || false;
-
-    const isValid = checkFields(name, date, city, fileName);
-    if (!isValid) return;
-
-    const data = {
-      name,
-      date,
-      gender,
-      city,
-      file: fileRef.current?.files?.[0] ? URL.createObjectURL(fileRef.current?.files?.[0]) : '',
-      agree,
-    };
-
-    addFormData(data);
-    formRef.current?.reset();
-  };
+  useEffect(() => {
+    if (isSubmitSuccessful) reset();
+  }, [isSubmitSuccessful, reset]);
 
   return (
-    <form ref={formRef} className="form" onSubmit={handleSubmit}>
-      <input placeholder="Name" ref={nameRef} />
-      {formState.nameError && <div className="form__error">{formState.nameError}</div>}
-      <input type="date" ref={dateRef} />
-      {formState.dateError && <div className="form__error">{formState.dateError}</div>}
-      <label>
-        subscribe
-        <CheckBox onChange={() => {}} ref={checkRef} />
-      </label>
-      <div className="form-gender">
-        <p>gender:</p>
-        <input type="radio" id="male" name="gender" value="male" ref={maleRef} defaultChecked />
-        <label htmlFor="male">Male</label>
-        <input type="radio" id="female" name="gender" value="female" ref={femaleRef} />
-        <label htmlFor="female">female</label>
-      </div>
-      <select
-        defaultValue=""
-        name="inputSelect"
-        id="city"
-        className="form__input-select"
-        ref={cityRef}
-      >
-        <option value="" disabled>
-          Выберете город
-        </option>
-        <option value="Москва">Москва</option>
-        <option value="Санкт-Петербург">Санкт-Петербург</option>
-        <option value="Красноярск">Красноярск</option>
-        <option value="Сочи">Сочи</option>
-        <option value="Новосибирск">Новосибирск</option>
-      </select>
-      {formState.cityError && <div className="form__error">{formState.cityError}</div>}
-      <input type="file" ref={fileRef} />
-      {formState.fileError && <div className="form__error">{formState.fileError}</div>}
-      <Button type="submit">submit</Button>
-    </form>
+    <>
+      <form className="form" onSubmit={onSubmit}>
+        <input
+          placeholder="Name"
+          {...register('name', {
+            required: 'This is a required field!',
+            minLength: {
+              value: 2,
+              message: 'The name cannot be shorter than 2 letters!',
+            },
+          })}
+        />
+        {errors.name && <div className="form__error">{errors.name?.message}</div>}
+        <input
+          type="date"
+          {...register('date', {
+            required: 'This is a required field!',
+          })}
+        />
+        {errors.date && <div className="form__error">{errors.date?.message}</div>}
+        <label>
+          subscribe
+          <CheckBox {...register('agree')} />
+        </label>
+        <div className="form-gender">
+          <p>gender:</p>
+          <input type="radio" id="male" value="male" defaultChecked {...register('gender')} />
+          <label htmlFor="male">Male</label>
+          <input type="radio" id="female" value="female" {...register('gender')} />
+          <label htmlFor="female">female</label>
+        </div>
+        <select
+          defaultValue=""
+          id="city"
+          className="form__input-select"
+          {...register('city', { required: 'Pick city!' })}
+        >
+          <option value="" disabled>
+            Выберете город
+          </option>
+          <option value="Москва">Москва</option>
+          <option value="Санкт-Петербург">Санкт-Петербург</option>
+          <option value="Красноярск">Красноярск</option>
+          <option value="Сочи">Сочи</option>
+          <option value="Новосибирск">Новосибирск</option>
+        </select>
+        {errors.city && <div className="form__error">{errors.city?.message}</div>}
+        <input type="file" {...register('file', { required: 'Pick file!' })} />
+        {errors.file && <div className="form__error">{errors.file?.message}</div>}
+        <Button type="submit">submit</Button>
+      </form>
+      {created && (
+        <div
+          className="form__confirm"
+          onClick={() => {
+            setCreated(false);
+          }}
+        >
+          Card added!
+        </div>
+      )}
+    </>
   );
 };
 

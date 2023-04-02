@@ -1,14 +1,16 @@
 import React, { FC } from 'react';
 import './CardPersonal.scss';
-export type personalCardProps = {
+
+export type FormInputs = {
   name: string;
   date: string;
   gender: string;
   city: string;
-  agree: boolean;
   file: string;
+  agree: boolean;
 };
-const CardPersonal: FC<personalCardProps> = ({ name, city, agree, file, gender, date }) => {
+
+const CardPersonal: FC<FormInputs> = ({ name, city, agree, file, gender, date }) => {
   return (
     <div className="card-personal">
       <img src={file} className="card-personal__img" />
