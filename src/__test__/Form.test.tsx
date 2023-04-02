@@ -1,9 +1,11 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import Form from '../components/Form';
 import { FormInputs } from '../components/CardPersonal';
 
-const addFormData = (data: FormInputs) => {};
+const addFormData = (data: FormInputs) => {
+  console.log(data);
+};
 
 describe('Form component', () => {
   it('renders all form fields and submit button', () => {

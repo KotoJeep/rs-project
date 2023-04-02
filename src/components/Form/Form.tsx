@@ -47,7 +47,7 @@ const Form: FC<FormProps> = ({ addFormData }) => {
 
   return (
     <>
-      <form className="form" onSubmit={onSubmit} data-testId="form">
+      <form className="form" onSubmit={onSubmit} data-testid="form">
         <input
           placeholder="Name"
           {...register('name', {
@@ -100,7 +100,7 @@ const Form: FC<FormProps> = ({ addFormData }) => {
       {created && (
         <div
           className="form__confirm"
-          data-tastId="button-submit"
+          data-tastid="button-submit"
           onClick={() => {
             setCreated(false);
           }}
