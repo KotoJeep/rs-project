@@ -1,2 +1,2 @@
 export { default } from './CardPersonal';
-export type { personalCardProps } from './CardPersonal';
+export type { FormInputs } from './CardPersonal';

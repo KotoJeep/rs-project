@@ -1,106 +1,87 @@
-import React, { Component, createRef, FormEvent } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import './Form.scss';
 import CheckBox from '../CheckBox';
 
 import Button from '../Button';
-import { personalCardProps } from '../CardPersonal';
-import { validateText, validateImg } from './validation';
 
-type FormState = {
-  nameError: string | null;
-  cityError: string | null;
-  fileError: string | null;
-  dateError: string | null;
-};
+import { useForm } from 'react-hook-form';
+import { FormInputs } from '../CardPersonal';
+
 type FormProps = {
-  addFormData: (data: personalCardProps) => void;
+  addFormData: (data: FormInputs) => void;
 };
 
-class Form extends Component<FormProps, FormState> {
-  state: FormState = {
-    nameError: null,
-    cityError: null,
-    fileError: null,
-    dateError: null,
-  };
-  nameRef = createRef<HTMLInputElement>();
-  dateRef = createRef<HTMLInputElement>();
-  maleRef = createRef<HTMLInputElement>();
-  checkRef = createRef<HTMLInputElement>();
-  femaleRef = createRef<HTMLInputElement>();
-  cityRef = createRef<HTMLSelectElement>();
-  fileRef = createRef<HTMLInputElement>();
-  formRef = createRef<HTMLFormElement>();
+type formState = {
+  name: string;
+  date: string;
+  gender: string;
+  city: string;
+  file: FileList;
+  agree: boolean;
+};
 
-  checkFields = (name: string, date: string, city: string, file: string): boolean => {
-    const nameError = validateText(name, 2) ? null : 'name cannot be shorter than 2 letters!';
-    const cityError = validateText(city, 0) ? null : 'chose city!';
-    const dateError = validateText(date, 0) ? null : 'pick date!';
-    const fileError = validateImg(file) ? null : 'chose image, Only jpeg, png, gif, svg formats!';
-    this.setState({ nameError, cityError, dateError, fileError });
-    return nameError === null && cityError === null && dateError === null && fileError === null;
-  };
+const Form: FC<FormProps> = ({ addFormData }) => {
+  const [created, setCreated] = useState<boolean>(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitSuccessful },
+    reset,
+  } = useForm<formState>({
+    reValidateMode: 'onSubmit',
+    mode: 'onSubmit',
+    shouldFocusError: false,
+  });
 
-  handleSubmit = (e: FormEvent) => {
-    const { addFormData } = this.props;
-    e.preventDefault();
-    const name = this.nameRef.current?.value || '';
-    const date = this.dateRef.current?.value || '';
-    const gender = this.maleRef.current?.checked ? 'male' : 'female';
-    const city = this.cityRef.current?.value || '';
-    const fileName = this.fileRef.current?.files?.[0] ? this.fileRef.current?.files?.[0].name : '';
-    const agree = this.checkRef.current?.checked || false;
+  const onSubmit = handleSubmit((data: formState) => {
+    addFormData({
+      ...data,
+      file: URL.createObjectURL(data.file[0]),
+    });
+    setCreated(true);
+  });
 
-    const isValid = this.checkFields(name, date, city, fileName);
-    if (!isValid) return;
+  useEffect(() => {
+    if (isSubmitSuccessful) reset();
+  }, [isSubmitSuccessful, reset]);
 
-    const data = {
-      name,
-      date,
-      gender,
-      city,
-      file: this.fileRef.current?.files?.[0]
-        ? URL.createObjectURL(this.fileRef.current?.files?.[0])
-        : '',
-      agree,
-    };
-
-    addFormData(data);
-    this.formRef.current?.reset();
-  };
-
-  render() {
-    const { nameError, cityError, dateError, fileError } = this.state;
-    return (
-      <form ref={this.formRef} className="form" onSubmit={this.handleSubmit}>
-        <input placeholder="Name" ref={this.nameRef} />
-        {nameError && <div className="form__error">{nameError}</div>}
-        <input type="date" ref={this.dateRef} />
-        {dateError && <div className="form__error">{dateError}</div>}
+  return (
+    <>
+      <form className="form" onSubmit={onSubmit} data-testId="form">
+        <input
+          placeholder="Name"
+          {...register('name', {
+            required: 'This is a required field!',
+            minLength: {
+              value: 2,
+              message: 'The name cannot be shorter than 2 letters!',
+            },
+          })}
+        />
+        {errors.name && <div className="form__error">{errors.name?.message}</div>}
+        <input
+          type="date"
+          {...register('date', {
+            required: 'This is a required field!',
+          })}
+        />
+        {errors.date && <div className="form__error">{errors.date?.message}</div>}
         <label>
           subscribe
-          <CheckBox onChange={() => {}} ref={this.checkRef} />
+          <CheckBox {...register('agree')} />
         </label>
         <div className="form-gender">
           <p>gender:</p>
-          <input
-            type="radio"
-            id="male"
-            name="gender"
-            value="male"
-            ref={this.maleRef}
-            defaultChecked
-          />
+          <input type="radio" id="male" value="male" defaultChecked {...register('gender')} />
           <label htmlFor="male">Male</label>
-          <input type="radio" id="female" name="gender" value="female" ref={this.femaleRef} />
+          <input type="radio" id="female" value="female" {...register('gender')} />
           <label htmlFor="female">female</label>
         </div>
         <select
           defaultValue=""
-          name="inputSelect"
           id="city"
           className="form__input-select"
-          ref={this.cityRef}
+          {...register('city', { required: 'Pick city!' })}
         >
           <option value="" disabled>
             Выберете город
@@ -111,13 +92,24 @@ class Form extends Component<FormProps, FormState> {
           <option value="Сочи">Сочи</option>
           <option value="Новосибирск">Новосибирск</option>
         </select>
-        {cityError && <div className="form__error">{cityError}</div>}
-        <input type="file" ref={this.fileRef} />
-        {fileError && <div className="form__error">{fileError}</div>}
+        {errors.city && <div className="form__error">{errors.city?.message}</div>}
+        <input type="file" {...register('file', { required: 'Pick file!' })} />
+        {errors.file && <div className="form__error">{errors.file?.message}</div>}
         <Button type="submit">submit</Button>
       </form>
-    );
-  }
-}
+      {created && (
+        <div
+          className="form__confirm"
+          data-tastId="button-submit"
+          onClick={() => {
+            setCreated(false);
+          }}
+        >
+          Card added!
+        </div>
+      )}
+    </>
+  );
+};
 
 export default Form;
