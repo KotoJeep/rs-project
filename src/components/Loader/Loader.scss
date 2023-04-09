@@ -1,0 +1,34 @@
+.loader {
+  --size: 40px;
+  --borderWidth: 5px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 100%;
+  border: var(--borderWidth) solid var(--mainColor);
+  border-left-color: transparent;
+  animation: rotate .9s linear infinite;
+
+  &_s {
+    --size: 20px;
+    --borderWidth: 3px
+  }
+
+  &_m {
+    --size: 40px;
+    --borderWidth: 4.5px
+  }
+
+  &_l {
+    --size: 60px;
+    --borderWidth: 6px
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

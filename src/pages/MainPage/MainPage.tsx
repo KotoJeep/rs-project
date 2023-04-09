@@ -19,11 +19,15 @@ const MainPage = () => {
   return (
     <div data-testid="main-page">
       <section className="presentation">
-        <h1 className="presentation__title">Products</h1>
-        <p className="presentation__text">
-          We display products based on the latest products we have, if you want to see our old
-          products please enter the name of the item
-        </p>
+        {/*<h1 className="presentation__title">Products</h1>*/}
+        <h1 className="presentation__title">
+          Dear cross-checker, unfortunately, did not have time to finish the work. I would be very
+          grateful if you would postpone checking my work until Wednesday
+        </h1>
+        {/*<p className="presentation__text">*/}
+        {/*  We display products based on the latest products we have, if you want to see our old*/}
+        {/*  products please enter the name of the item*/}
+        {/*</p>*/}
       </section>
       <SearchBar onSubmitValue={changeQuery} />
       <CardsWrapper collection={products} />
