@@ -9,7 +9,8 @@ import useApi from '../../hooks/useApi';
 
 const MainPage = () => {
   const [products, setProducts] = useState<ProductI[]>([]);
-  const { data, error, isLoading } = useApi<responseProductsI>();
+  const [query, setQuery] = useState<string>('');
+  const { data, error, isLoading, changeQuery } = useApi<responseProductsI>();
 
   useEffect(() => {
     data && setProducts(data?.products);
@@ -24,7 +25,7 @@ const MainPage = () => {
           products please enter the name of the item
         </p>
       </section>
-      <SearchBar />
+      <SearchBar onSubmitValue={changeQuery} />
       <CardsWrapper collection={products} />
       {isLoading && 'Loading'}
       {error && <p>{error}</p>}

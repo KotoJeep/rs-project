@@ -1,9 +1,12 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, FormEvent, useEffect, useLayoutEffect, useState } from 'react';
 import './SearchBar.scss';
 import Input from '../Input';
 import Button from '../Button';
 
-const SearchBar: FC = () => {
+type SearchBarProps = {
+  onSubmitValue: (value: string) => void;
+};
+const SearchBar: FC<SearchBarProps> = (props) => {
   const [inputValue, setInputValue] = useState<string>(localStorage.getItem('inputValue') || '');
 
   useEffect(() => {
@@ -13,12 +16,15 @@ const SearchBar: FC = () => {
   const handleInputChange = (inputValue: string) => {
     setInputValue(inputValue);
   };
-
+  const onSubmitForm = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    props.onSubmitValue(`products/search?q=${inputValue}`);
+  };
   return (
-    <div className="search-bar">
+    <form className="search-bar" onSubmit={onSubmitForm}>
       <Input value={inputValue} placeholder="Search property" onChange={handleInputChange} />
-      <Button>Find Now</Button>
-    </div>
+      <Button type="submit">Find Now</Button>
+    </form>
   );
 };
 
