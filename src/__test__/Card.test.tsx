@@ -16,10 +16,11 @@ describe('Card Tests', () => {
   it('пропсы передаются и отображаются', () => {
     render(
       <Card
-        image={cardProps.image}
+        thumbnail={cardProps.image}
         title={cardProps.title}
         description={cardProps.description}
         price={cardProps.price}
+        category={'dfdf'}
       />
     );
 

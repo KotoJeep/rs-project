@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './MainPage.scss';
 
 import SearchBar from '../../components/SearchBar';
-import { CardProps } from '../../components/Card';
+
+import { ProductI, responseProductsI } from '../../service/Api';
 import CardsWrapper from '../../components/CardsWrapper';
-const item: CardProps = {
-  title: 'Handmade Bronze Salad',
-  image: 'https://api.lorem.space/image/shoes?w=640&h=480&r=8863',
-  category: 'Shoes',
-  description:
-    'The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive',
-  price: 547,
-};
-export const arrItems: CardProps[] = new Array(9).fill(item);
+import useApi from '../../hooks/useApi';
 
 const MainPage = () => {
+  const [products, setProducts] = useState<ProductI[]>([]);
+  const { data, error, isLoading } = useApi<responseProductsI>();
+
+  useEffect(() => {
+    data && setProducts(data?.products);
+  }, [data]);
+
   return (
     <div data-testid="main-page">
       <section className="presentation">
@@ -25,7 +25,9 @@ const MainPage = () => {
         </p>
       </section>
       <SearchBar />
-      <CardsWrapper collection={arrItems} />
+      <CardsWrapper collection={products} />
+      {isLoading && 'Loading'}
+      {error && <p>{error}</p>}
     </div>
   );
 };

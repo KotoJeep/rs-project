@@ -1,19 +1,16 @@
-import React, { MouseEventHandler, ReactNode } from 'react';
+import React, { MouseEventHandler } from 'react';
 import './Card.scss';
+import { ProductI } from '../../service/Api';
 
-export type CardProps = {
-  image: string;
-  category?: ReactNode;
-  title: ReactNode;
-  description: ReactNode;
-  price: ReactNode;
+export interface CardProps extends ProductI {
   onClick?: MouseEventHandler;
-};
+}
 
-const Card = ({ image, title, category, description, price, onClick }: CardProps) => {
+const Card = (data: Omit<CardProps, 'id'>) => {
+  const { thumbnail, title, category, description, price } = data;
   return (
-    <div className="card" onClick={onClick}>
-      <img src={image} className="card__img" />
+    <div className="card">
+      <img src={thumbnail} className="card__img" />
       <div className="card__wrapper">
         <h5 className="card__category">{category}</h5>
         <h3 className="card__title">{title}</h3>

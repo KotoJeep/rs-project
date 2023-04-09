@@ -7,18 +7,25 @@ export interface ProductI {
   title: string;
   description: string;
   price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  brand: string;
   category: string;
   thumbnail: string;
-  images: string[];
+}
+// rating: number;
+// stock: number;
+// brand: string;
+// discountPercentage: number;
+// images: string[];
+export interface responseProductsI {
+  products: ProductI[];
+  total: number;
+  skip: number;
+  limit: number;
 }
 
 export const getProducts = async (): Promise<ProductI[]> => {
   try {
-    return await api.get('products').json<ProductI[]>();
+    const res = await api.get('products').json<responseProductsI>();
+    return res.products;
   } catch (error) {
     throw new Error('Failed to fetch products.');
   }
