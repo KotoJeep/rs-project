@@ -7,9 +7,9 @@ export interface CardProps extends ProductI {
 }
 
 const Card = (data: Omit<CardProps, 'id'>) => {
-  const { thumbnail, title, category, description, price } = data;
+  const { thumbnail, title, category, description, price, onClick } = data;
   return (
-    <div className="card">
+    <div className="card" onClick={onClick}>
       <img src={thumbnail} className="card__img" />
       <div className="card__wrapper">
         <h5 className="card__category">{category}</h5>

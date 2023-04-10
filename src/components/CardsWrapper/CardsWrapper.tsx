@@ -9,7 +9,17 @@ const CardsWrapper = ({ collection }: CardsWrapperProps) => {
   const renderCards =
     collection &&
     collection.map((card) => {
-      const { title, category, description, price, onClick = () => {}, thumbnail, id } = card;
+      const {
+        title,
+        category,
+        description,
+        price,
+        onClick = () => {
+          console.log(id);
+        },
+        thumbnail,
+        id,
+      } = card;
 
       return (
         <Card

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './MainPage.scss';
-
 import SearchBar from '../../components/SearchBar';
-
 import { ProductI, responseProductsI } from '../../service/Api';
-import CardsWrapper from '../../components/CardsWrapper';
 import useApi from '../../hooks/useApi';
 import { WithLoader } from '../../components/WithLoader';
+import Card from '../../components/Card';
 
 const MainPage = () => {
   const [products, setProducts] = useState<ProductI[]>([]);
@@ -15,6 +13,27 @@ const MainPage = () => {
   useEffect(() => {
     data && setProducts(data?.products);
   }, [data]);
+
+  const renderCards = (collection: ProductI[]) => {
+    return collection.map((card) => {
+      const { title, category, description, price, thumbnail, id } = card;
+
+      return (
+        <Card
+          key={id}
+          thumbnail={thumbnail}
+          title={title}
+          description={description}
+          price={price}
+          category={category}
+          onClick={() => {
+            console.log(id);
+          }}
+        />
+      );
+    });
+  };
+  const cards = renderCards(products);
 
   return (
     <div data-testid="main-page">
@@ -31,9 +50,15 @@ const MainPage = () => {
       </section>
       <SearchBar onSubmitValue={changeQuery} />
       <WithLoader loading={isLoading}>
-        {!isLoading ? <CardsWrapper collection={products} /> : null}
+        {!isLoading ? (
+          <div className="cards">
+            <h2 className="cards-title">
+              {products.length ? 'Total Product' : 'Product not found'}
+            </h2>
+            {products && <div className="cards-wrapper">{cards}</div>}
+          </div>
+        ) : null}
       </WithLoader>
-
       {error && <p>{error}</p>}
     </div>
   );
