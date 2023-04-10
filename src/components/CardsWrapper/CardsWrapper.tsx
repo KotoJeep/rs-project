@@ -25,8 +25,8 @@ const CardsWrapper = ({ collection }: CardsWrapperProps) => {
     });
   return (
     <div className="cards">
-      <h2 className="cards-title">Total Product</h2>
-      {collection && <div className="cards-wrapper">{renderCards}</div>};
+      <h2 className="cards-title">{collection.length ? 'Total Product' : 'Product not found'}</h2>
+      {collection && <div className="cards-wrapper">{renderCards}</div>}
     </div>
   );
 };

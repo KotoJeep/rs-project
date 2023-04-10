@@ -6,10 +6,10 @@ import SearchBar from '../../components/SearchBar';
 import { ProductI, responseProductsI } from '../../service/Api';
 import CardsWrapper from '../../components/CardsWrapper';
 import useApi from '../../hooks/useApi';
+import { WithLoader } from '../../components/WithLoader';
 
 const MainPage = () => {
   const [products, setProducts] = useState<ProductI[]>([]);
-  const [query, setQuery] = useState<string>('');
   const { data, error, isLoading, changeQuery } = useApi<responseProductsI>();
 
   useEffect(() => {
@@ -30,8 +30,10 @@ const MainPage = () => {
         {/*</p>*/}
       </section>
       <SearchBar onSubmitValue={changeQuery} />
-      <CardsWrapper collection={products} />
-      {isLoading && 'Loading'}
+      <WithLoader loading={isLoading}>
+        {!isLoading ? <CardsWrapper collection={products} /> : null}
+      </WithLoader>
+
       {error && <p>{error}</p>}
     </div>
   );
