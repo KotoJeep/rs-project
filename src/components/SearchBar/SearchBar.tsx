@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useEffect, useLayoutEffect, useState } from 'react';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
 import './SearchBar.scss';
 import Input from '../Input';
 import Button from '../Button';
