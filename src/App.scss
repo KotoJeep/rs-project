@@ -1,0 +1,19 @@
+@import url("./styles/EudoxusSans/fonts.scss");;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Eudoxus Sans', sans-serif;
+}
+
+:root {
+  --mainColor: #518581;
+  --fadeColor: #AFADB5;
+  --textColor: #151411;
+  --disabledColor: #efefef;
+}
+
+body{
+  position: relative;
+}
