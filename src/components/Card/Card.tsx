@@ -14,7 +14,6 @@ const Card = (data: Omit<CardProps, 'id'>) => {
       <div className="card__wrapper">
         <h5 className="card__category">{category}</h5>
         <h3 className="card__title">{title}</h3>
-        <p className="card__description">{description}</p>
         <h3 className="card__price">${price}</h3>
       </div>
     </div>
