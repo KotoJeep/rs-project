@@ -15,13 +15,10 @@ export const shopApi = createApi({
   tagTypes: ['products'],
   endpoints: (build) => ({
     fetchProducts: build.query<responseProductsI, string>({
-      query: () => constUrl.PRODUCTS,
+      query: (query) => (query === '' ? constUrl.PRODUCTS : `products/search?q=${query}`),
       providesTags: ['products'],
     }),
-    // searchProducts: build.query<responseProductsI, string>({
-    //   // query: ({ query }: string) => ``,
-    // }),
   }),
 });
 
-// export const {useFetchProductsQuery } = shopApi;
+export const { useFetchProductsQuery } = shopApi;

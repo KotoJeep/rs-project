@@ -6,12 +6,14 @@ import useApi from '../../hooks/useApi';
 import { WithLoader } from '../../components/WithLoader';
 import Card from '../../components/Card';
 import CardModal from '../../components/CardModal';
+import { useFetchProductsQuery } from '../../store/shopApi';
 
 const MainPage = () => {
   const [products, setProducts] = useState<ProductI[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [id, setId] = useState<number>(0);
 
+  const {} = useFetchProductsQuery();
   const { data, error, isLoading, changeQuery } = useApi<responseProductsI>();
 
   useEffect(() => {
