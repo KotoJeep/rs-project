@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { shopApi } from './shopApi';
+import formSlice from './formSlice';
 
 const rootReducer = combineReducers({
   [shopApi.reducerPath]: shopApi.reducer,
+  formSlice,
 });
 
 const store = configureStore({
