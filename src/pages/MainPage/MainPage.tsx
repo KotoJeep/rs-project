@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import './MainPage.scss';
 import SearchBar from '../../components/SearchBar';
-import { ProductI, responseProductsI } from '../../service/Api';
-import useApi from '../../hooks/useApi';
+import { ProductI } from '../../service/Api';
 import { WithLoader } from '../../components/WithLoader';
 import Card from '../../components/Card';
 import CardModal from '../../components/CardModal';
 import { useFetchProductsQuery } from '../../store/shopApi';
+import { useAppSelector } from '../../hooks/hooks';
 
 const MainPage = () => {
   const [products, setProducts] = useState<ProductI[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [id, setId] = useState<number>(0);
+  const { searchQuery } = useAppSelector((state) => state.formSlice);
 
-  const {} = useFetchProductsQuery();
-  const { data, error, isLoading, changeQuery } = useApi<responseProductsI>();
+  const { data, isLoading, isFetching, error } = useFetchProductsQuery(searchQuery);
 
   useEffect(() => {
     data && setProducts(data?.products);
@@ -62,10 +62,10 @@ const MainPage = () => {
           grateful if you would postpone checking my work until Wednesday
         </h1>
       </section>
-      <SearchBar onSubmitValue={changeQuery} />
+      <SearchBar searchQuery={searchQuery} />
       <div className="cards">
-        <WithLoader loading={isLoading}>
-          {!isLoading ? (
+        <WithLoader loading={isLoading || isFetching}>
+          {!isLoading && !isFetching ? (
             <>
               <h2 className="cards-title">
                 {products.length ? 'Total Product' : 'Product not found'}
@@ -76,7 +76,7 @@ const MainPage = () => {
         </WithLoader>
       </div>
       {isOpen && <CardModal {...{ closeModal, id }} />}
-      {error && <p>{error}</p>}
+      {error && <p>error</p>}
     </div>
   );
 };

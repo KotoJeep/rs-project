@@ -1,17 +1,14 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import Form from '../../components/Form';
-import CardPersonal, { FormInputs } from '../../components/CardPersonal';
+import CardPersonal from '../../components/CardPersonal';
+import { useAppSelector } from '../../hooks/hooks';
 
 const FormPage: FC = () => {
-  const [cards, setCards] = useState<FormInputs[]>([]);
-
-  const addFormData = (data: FormInputs) => {
-    setCards([...cards, data]);
-  };
+  const { personalCards: cards } = useAppSelector((state) => state.formSlice);
 
   return (
     <div data-testid="form-page">
-      <Form addFormData={addFormData} />
+      <Form />
       <div className="card-wrapper">
         {cards.map(({ name, date, gender, agree, city, file }, idx) => {
           return (

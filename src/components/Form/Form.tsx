@@ -1,15 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import './Form.scss';
 import CheckBox from '../CheckBox';
-
 import Button from '../Button';
-
 import { useForm } from 'react-hook-form';
-import { FormInputs } from '../CardPersonal';
-
-type FormProps = {
-  addFormData: (data: FormInputs) => void;
-};
+import { useAppDispatch } from '../../hooks/hooks';
+import { addFormData } from '../../store/formSlice';
 
 type formState = {
   name: string;
@@ -20,7 +15,8 @@ type formState = {
   agree: boolean;
 };
 
-const Form: FC<FormProps> = ({ addFormData }) => {
+const Form: FC = () => {
+  const dispatch = useAppDispatch();
   const [created, setCreated] = useState<boolean>(false);
   const {
     register,
@@ -34,10 +30,12 @@ const Form: FC<FormProps> = ({ addFormData }) => {
   });
 
   const onSubmit = handleSubmit((data: formState) => {
-    addFormData({
-      ...data,
-      file: URL.createObjectURL(data.file[0]),
-    });
+    dispatch(
+      addFormData({
+        ...data,
+        file: URL.createObjectURL(data.file[0]),
+      })
+    );
     setCreated(true);
   });
 

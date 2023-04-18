@@ -10,11 +10,7 @@ export interface ProductI {
   category: string;
   thumbnail: string;
 }
-// rating: number;
-// stock: number;
-// brand: string;
-// discountPercentage: number;
-// images: string[];
+
 export interface responseProductsI {
   products: ProductI[];
   total: number;

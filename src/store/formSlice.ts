@@ -3,12 +3,12 @@ import { FormInputs } from '../components/CardPersonal';
 
 interface formSliceState {
   personalCards: FormInputs[];
-  inputValue: string;
+  searchQuery: string;
 }
 
 const initialState: formSliceState = {
   personalCards: [],
-  inputValue: '',
+  searchQuery: '',
 };
 
 const formSlice = createSlice({
@@ -18,12 +18,12 @@ const formSlice = createSlice({
     addFormData: (state, action: PayloadAction<FormInputs>) => {
       state.personalCards.push(action.payload);
     },
-    setInputValue: (state, action: PayloadAction<string>) => {
-      state.inputValue = action.payload;
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.searchQuery = action.payload;
     },
   },
 });
 
 const { actions, reducer } = formSlice;
 export default reducer;
-export const { addFormData, setInputValue } = actions;
+export const { addFormData, setSearchQuery } = actions;
