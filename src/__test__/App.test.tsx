@@ -1,11 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from '../App';
+import store from '../store/store';
+import { Provider } from 'react-redux';
 
 test('renders MainPage component', () => {
   render(
     <MemoryRouter initialEntries={['/']}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </MemoryRouter>
   );
   const mainPageElement = screen.getByTestId('main-page');
@@ -15,7 +19,9 @@ test('renders MainPage component', () => {
 test('renders FormPage component', () => {
   render(
     <MemoryRouter initialEntries={['/form']}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </MemoryRouter>
   );
   const formPageElement = screen.getByTestId('form-page');
